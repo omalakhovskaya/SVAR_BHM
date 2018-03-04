@@ -203,15 +203,18 @@ prior_tau = student_prior(z1,c_tau,sigma_tau,nu_tau);
 
 % Set arbitrary initial values for elements of A (prior mode/mean of
 % elements in A and L)
-A_old=[c_alpha_qp; c_alpha_yp; c_beta_qy; c_beta_qp; alpha_k/(alpha_k+beta_k); ...
-       c_psi1; c_psi3; alpha_rho/(alpha_rho+beta_rho); c_gamma1; c_gamma2; c_gamma3; ...
-       c_gamma4; c_phi; c_tau];   
+% Default code 3 lines
+%A_old=[c_alpha_qp; c_alpha_yp; c_beta_qy; c_beta_qp; alpha_k/(alpha_k+beta_k); ...
+       %c_psi1; c_psi3; alpha_rho/(alpha_rho+beta_rho); c_gamma1; c_gamma2; c_gamma3; ...
+       % c_gamma4; c_phi; c_tau];   
+random_generator;   
+   A_old   
+   
 % Set arbitrary initial values for elements of A (prior mode/mean of
 % elements in A and L)
  
 A_old0_8 = A_old;
 save A_old0_8 A_old0_8  
-c=size(A_old,1);           %number of parameters in A and L to be estimated
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % STEP 1b: Set informative priors on lagged coefficients (B) %
 %          and for inverse of diagonal elements (D)          %
