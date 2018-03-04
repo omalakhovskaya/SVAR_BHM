@@ -21,7 +21,7 @@ time4=(1995:1/12:2017+4/12)';   %sample period: 1995M1 to 2017M05
 time5=(1992+11/12:1/12:2017+4/12)';   %sample period: 1992M12 to 2017M05
 
 
-data = data3; 
+data = data4; 
 %time = time3; 
 
 seednumber=140778;
@@ -284,7 +284,7 @@ f_anon = @(theta) -getposterior8(theta,param,S,m,yyy1,yyy2,Pinv,Xtilde,mu,n,c,ka
     
 %starting value for theta
 
-options = optimset('LargeScale','off','MaxFunEvals',5000);
+options = optimset('LargeScale','off','MaxFunEvals',5000, 'Display', 'iter');
 [theta_max,val_max,exitm,~,~,HM] = fminunc(f_anon,A_old,options);
 
 %find Hessian of log posterior
