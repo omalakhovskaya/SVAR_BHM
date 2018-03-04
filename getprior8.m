@@ -1,0 +1,16 @@
+function prior = getprior8(x, params,c)
+prior = zeros(c,1);
+prior(1) = student_pos_prior(x(1),params(1),params(2),params(3));
+prior(2) = student_neg_prior(x(2),params(4),params(5),params(6));
+prior(3) = student_pos_prior(x(3),params(7),params(8),params(9));
+prior(4) = student_neg_prior(x(4),params(10),params(11),params(12));
+prior(5) = beta_prior(x(5),params(13),params(14));
+prior(6) = student_prior(x(6),params(15),params(16),params(17));
+prior(7) = student_prior(x(7),params(18),params(19),params(20));
+prior(8) = beta_prior(x(8),params(21),params(22));
+prior(9) = student_pos_prior(x(9),params(23),params(24),params(25));
+prior(10) = student_neg_prior(x(10),params(26),params(27),params(28));
+prior(11) = student_pos_prior(x(11),params(29),params(30),params(31));
+prior(12) = student_neg_prior(x(12),params(32),params(33),params(34));
+prior(13) = student_prior(x(13),params(35),params(36),params(37));
+prior(14) = student_prior(x(14),params(38),params(39),params(40));
