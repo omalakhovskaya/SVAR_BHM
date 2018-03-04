@@ -21,15 +21,15 @@ time4=(1995:1/12:2017+4/12)';   %sample period: 1995M1 to 2017M05
 time5=(1992+11/12:1/12:2017+4/12)';   %sample period: 1992M12 to 2017M05
 
 
-data = data5; 
+data = data3; 
 %time = time3; 
 
 seednumber=140778;
 rand('seed',seednumber);
 randn('seed',seednumber);
 
-ndraws=2e5;              %number of MH iterations (paper used 2e6)
-nburn=1e5;               %number of burn-in draws (paper used 1e6)
+ndraws=2e4;              %number of MH iterations (paper used 2e6)
+nburn=1e4;               %number of burn-in draws (paper used 1e6)
 
 wti=1;           %'wti=1': WTI is used for entire sample; 'wti=0': RAC is used for second subsample
 nlags=12;        %number of lags
