@@ -17,7 +17,7 @@ alph=0.025;
 index=[round(alph*(ndraws-nburn)) round((1-alph)*(ndraws-nburn)) round((ndraws-nburn)/2)];    %implies 95% coverage of the entire distribution
 HO=(0:1:hmax-8)';                                                        %impulse response horizon
 
-figure(10)
+figure(3)
 subplot(4,4,1)
 x=-sort(cumsum(squeeze(IRF(1,1,:,:)),1),2);
 temp1=[x(:,index(3)) x(:,index(1)) x(:,index(2))];
@@ -185,7 +185,47 @@ title('Inventory demand shock','fontsize',12)
 ylabel('Stocks','fontsize',12)
 xlabel('Months','fontsize',11)
 
+figure(4)
+subplot(2,2,1)
+x=-sort(cumsum(squeeze(IRF(5,1,:,:)),1),2);
+temp1=[x(:,index(3)) x(:,index(1)) x(:,index(2))];
+plotx1(temp1,HO); box on; plot(HO,zeros(hmax-7,1),'k:')
+axis([0 hmax-8 -1 2])
+set(gca,'XTick',0:5:20)
+set(gca,'YTick',-2.5:.5:1.5)
+ylabel('Personal income','fontsize',12)
+title('Oil supply shock','fontsize',12)
 
+subplot(2,2,2)
+x=sort(cumsum(squeeze(IRF(5,2,:,:)),1),2);
+temp1=[x(:,index(3)) x(:,index(1)) x(:,index(2))];
+plotx1(temp1,HO); box on; plot(HO,zeros(hmax-7,1),'k:')
+axis([0 hmax-8 -1 2])
+set(gca,'XTick',0:5:20)
+set(gca,'YTick',-5:5:10)
+ylabel('Personal income','fontsize',12)
+title('Economic activity shock','fontsize',12)
+
+subplot(2,2,3)
+x=sort(cumsum(squeeze(IRF(5,3,:,:)),1),2);
+temp1=[x(:,index(3)) x(:,index(1)) x(:,index(2))];
+plotx1(temp1,HO); box on; plot(HO,zeros(hmax-7,1),'k:')
+axis([0 hmax-8 -1 2])
+set(gca,'XTick',0:5:20)
+set(gca,'YTick',-1.5:.5:1)
+title('Consumption demand shock','fontsize',12)
+ylabel('Personal Income','fontsize',12)
+
+subplot(2,2,4)
+x=sort(cumsum(squeeze(IRF(5,4,:,:)),1),2);
+temp1=[x(:,index(3)) x(:,index(1)) x(:,index(2))];
+plotx1(temp1,HO); box on; plot(HO,zeros(hmax-7,1),'k:')
+axis([0 hmax-8 -1 2])
+set(gca,'XTick',0:5:20)
+set(gca,'YTick',-0.5:.5:1)
+title('Inventory demand shock','fontsize',12)
+ylabel('Personal income','fontsize',12)
+xlabel('Months','fontsize',11)
 nuse=ndraws-nburn;
 alph=0.025;   
 index=[nuse/2 alph*nuse (1-alph)*nuse];    %implies 95% coverage of the entire distribution

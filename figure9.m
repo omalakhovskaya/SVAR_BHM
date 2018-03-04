@@ -52,27 +52,27 @@ title('${\rho}$','interpreter','latex','fontsize',14)
 
 subplot(3,5,9)
 bar(bg_i(9,:),post_i(9,:)), hold on, plot(z1,prior_gamma1,'r','linewidth',2); box on
-axis([0 1 0 8])
+axis([-2 2 0 4])
 title('${\gamma}_{1}$','interpreter','latex','fontsize',14)
 
 subplot(3,5,10)
 bar(bg_i(10,:),post_i(10,:)), hold on, plot(z1,prior_gamma2,'r','linewidth',2); box on
-axis([-0.5 0 0 30])
+axis([-2 2 0 4])
 title('${\gamma}_{2}$','interpreter','latex','fontsize',14)
 
 subplot(3,5,11)
 bar(bg_i(11,:),post_i(11,:)), hold on, plot(z1,prior_gamma3,'r','linewidth',2); box on
-axis([0 1.5 0 2.5])
+axis([-2 2 0 4])
 title('${\gamma}_{3}$','interpreter','latex','fontsize',14)
 
 subplot(3,5,12)
 bar(bg_i(12,:),post_i(12,:)), hold on, plot(z1,prior_gamma4,'r','linewidth',2); box on
-axis([-1 0 0 4])
+axis([-2 2 0 4])
 title('${\gamma}_{4}$','interpreter','latex','fontsize',14)
 
 subplot(3,5,13)
 bar(bg_i(13,:),post_i(13,:)), hold on, plot(z1,prior_phi,'r','linewidth',2); box on
-axis([0 1 0 5])
+axis([-2 2 0 4])
 title('${\phi}$','interpreter','latex','fontsize',14)
 
 subplot(3,5,14)

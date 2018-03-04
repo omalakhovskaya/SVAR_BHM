@@ -9,6 +9,7 @@
 %%% Data until 2015 are available
 
 clear all
+close all
 clc
 
 
@@ -21,7 +22,7 @@ time4=(1995:1/12:2017+4/12)';   %sample period: 1995M1 to 2017M05
 time5=(1992+11/12:1/12:2017+4/12)';   %sample period: 1992M12 to 2017M05
 
 
-data = data4; 
+data = data3; 
 %time = time3; 
 
 seednumber=140778;
