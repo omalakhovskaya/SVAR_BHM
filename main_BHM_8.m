@@ -25,9 +25,10 @@ time5=(1992+11/12:1/12:2017+4/12)';   %sample period: 1992M12 to 2017M05
 data = data3; 
 %time = time3; 
 
-seednumber=140778;
+%seednumber=140778;
+seednumber= 201229;
 rand('seed',seednumber);
-randn('seed',seednumber);
+%randn('seed',seednumber);
 
 ndraws=2e4;              %number of MH iterations (paper used 2e6)
 nburn=1e4;               %number of burn-in draws (paper used 1e6)
@@ -204,17 +205,19 @@ prior_tau = student_prior(z1,c_tau,sigma_tau,nu_tau);
 % Set arbitrary initial values for elements of A (prior mode/mean of
 % elements in A and L)
 % Default code 3 lines
+
 %A_old=[c_alpha_qp; c_alpha_yp; c_beta_qy; c_beta_qp; alpha_k/(alpha_k+beta_k); ...
-       %c_psi1; c_psi3; alpha_rho/(alpha_rho+beta_rho); c_gamma1; c_gamma2; c_gamma3; ...
-       % c_gamma4; c_phi; c_tau];   
+ %    c_psi1; c_psi3; alpha_rho/(alpha_rho+beta_rho); c_gamma1; c_gamma2; c_gamma3; ...
+  %   c_gamma4; c_phi; c_tau];   
+
+flag = 0; 
+while flag ==0 
 random_generator;   
-   A_old   
+%A_old   
    
 % Set arbitrary initial values for elements of A (prior mode/mean of
 % elements in A and L)
- 
-A_old0_8 = A_old;
-save A_old0_8 A_old0_8  
+save A_old0_8 A_old  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % STEP 1b: Set informative priors on lagged coefficients (B) %
 %          and for inverse of diagonal elements (D)          %
@@ -290,6 +293,12 @@ f_anon = @(theta) -getposterior8(theta,param,S,m,yyy1,yyy2,Pinv,Xtilde,mu,n,c,ka
 
 options = optimset('LargeScale','off','MaxFunEvals',5000, 'Display', 'iter');
 [theta_max,val_max,exitm,~,~,HM] = fminunc(f_anon,A_old,options);
+theta_max
+if theta_max(1)>0 && theta_max(2)<0 && theta_max(3)>0 && theta_max(4)<0 && ...
+            theta_max(5)>0 && theta_max(5)<1 && theta_max(8)>0 && theta_max(8)<1   
+        flag = 1; 
+end 
+end 
 
 %find Hessian of log posterior
 if min(eig(inv(HM))) > 0
@@ -354,8 +363,7 @@ for count = 1:ndraws
     if count>nburn
          %Store results after burn-in    
          A_post_m(:,count-nburn)=A_old;  
-          
-              
+                        
          AA_tilde=[1 0 -A_old(1) 0 0; ...
                    0 1 -A_old(2) 0 0; ...
                    1 -A_old(3:4)' -1/A_old(5) 0;...
@@ -406,9 +414,9 @@ save posterior_draws A_post_m A_post B_post D_post
 % p2=0.5;   %last 50% of the sample
 % autoc = convergence_diagnostics(A_post_m,p1,p2);
 
-figure9    %plots the prior and posterior distributions for the elements in A
+%figure9    %plots the prior and posterior distributions for the elements in A
 
-figure10   %computes and plots the impluse-response functions
+%figure10   %computes and plots the impluse-response functions
 
 %figure11   %computes and plots the historical decomposition
 

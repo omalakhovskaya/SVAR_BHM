@@ -1,4 +1,4 @@
-A_old = zeros(c,1)
+A_old = zeros(c,1);
 
 while A_old(1) <= 0 
 A_old(1) = trnd(nu_alpha_qp)*sigma_alpha_qp+c_alpha_qp;
