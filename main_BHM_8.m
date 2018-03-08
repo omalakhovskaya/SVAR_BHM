@@ -42,8 +42,8 @@ seednumber= 230280;
 rand('seed',seednumber);
 %randn('seed',seednumber);
 
-ndraws=2e5;              %number of MH iterations (paper used 2e6)
-nburn=1e5;               %number of burn-in draws (paper used 1e6)
+ndraws=2e4;              %number of MH iterations (paper used 2e6)
+nburn=1e4;               %number of burn-in draws (paper used 1e6)
 
 wti=1;           %'wti=1': WTI is used for entire sample; 'wti=0': RAC is used for second subsample
 nlags=12;        %number of lags
@@ -51,7 +51,7 @@ hmax=25;         %impulse response horizon (17 months)
 ndet=1;          %number of deterministic variables 
                  %(1: constant)
 xsi=0.4;        %tuning parameter to achieve a target acceptance rate of around 30-35
-                %0.4 an appropriate value for data4
+                %0.4 an appropriate value for data4 and da
                 
 c = 14;            % number of nonzero parameters of A that we have prior information about  
 kappa=2;                          %prior 
@@ -331,6 +331,9 @@ A_post_m=zeros(c,ndraws-nburn);
 A_post=zeros(n,n,ndraws-nburn);
 B_post=zeros(n,n*nlags+1,ndraws-nburn);
 D_post=zeros(n,n,ndraws-nburn);
+G_post = zeros(n,n,ndraws-nburn);
+D_star_post = zeros(n,n,ndraws-nburn);
+
 posteriors_all7 = zeros(ndraws, 1); 
 A_new_all8 = zeros(ndraws,c);
 A_old_all8 = zeros(ndraws,c);
@@ -389,7 +392,7 @@ for count = 1:ndraws
          
          AA=P*AA_tilde;
          A_post(:,:,count-nburn)=AA;
-        
+         G_post(:,:,count - nburn) = P; % added in this version
          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
          % STEP 7: Generate a draw for d(ii)^-1 from independent gamma %
          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -406,13 +409,14 @@ for count = 1:ndraws
          end 
          DD = diag(d);
                 D_post(:,:,count-nburn)=DD;
-                 
+                D_star_post(:,:,count-nburn) = inv(P)*DD*inv(P'); % added in this version
+                
          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
          % STEP 8: Generate a draw for b(i) from multivariate normal %
          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
          BB = mstar + repmat(d',nlags*n+ndet,1).*(randn(n,nlags*n+ndet)*chol(M_star))';
          B_post(:,:,count-nburn)=BB';
-         clear AA_tilde AA BB DD
+         clear AA_tilde AA BB DD 
        end 
    end
 
@@ -420,8 +424,8 @@ for count = 1:ndraws
 acceptance_ratio=naccept/ndraws;
 disp(['Acceptance ratio:' num2str(acceptance_ratio)])
 
-save posterior_draws A_post_m A_post B_post D_post
-
+save posterior_draws A_post_m A_post B_post D_post G_post D_star_post
+ 
 % Analyze convergence of the chain
 % p1=0.1;   %first 10% of the sample (for Geweke's (1992) convergence diagnostic)
 % p2=0.5;   %last 50% of the sample
